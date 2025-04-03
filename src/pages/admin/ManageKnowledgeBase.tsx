@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { knowledgeBaseArticles } from "@/lib/data";
 import { KnowledgeBaseArticle } from "@/lib/types";
@@ -29,7 +29,6 @@ const ManageKnowledgeBase = () => {
     category: "",
   });
 
-  // Get all unique categories from existing articles
   const categories = getAllCategories();
 
   const handleInputChange = (
@@ -44,7 +43,6 @@ const ManageKnowledgeBase = () => {
   };
 
   const handleAddArticle = () => {
-    // Simple validation
     if (!formData.title || !formData.content || !formData.category) {
       toast({
         title: "Validation Error",
@@ -64,8 +62,8 @@ const ManageKnowledgeBase = () => {
     };
 
     setArticles(prev => [...prev, newArticle]);
-    knowledgeBaseArticles.push(newArticle); // Add to mock data
-    
+    knowledgeBaseArticles.push(newArticle);
+
     toast({
       title: "Article Added",
       description: "The article has been added successfully",
@@ -78,7 +76,6 @@ const ManageKnowledgeBase = () => {
   const handleEditArticle = () => {
     if (!currentArticle) return;
     
-    // Simple validation
     if (!formData.title || !formData.content || !formData.category) {
       toast({
         title: "Validation Error",
@@ -101,7 +98,6 @@ const ManageKnowledgeBase = () => {
       return article;
     });
 
-    // Update the mock data
     const articleIndex = knowledgeBaseArticles.findIndex(a => a.id === currentArticle.id);
     if (articleIndex !== -1) {
       knowledgeBaseArticles[articleIndex] = {
@@ -129,7 +125,6 @@ const ManageKnowledgeBase = () => {
     
     const updatedArticles = articles.filter(article => article.id !== currentArticle.id);
     
-    // Update the mock data
     const articleIndex = knowledgeBaseArticles.findIndex(a => a.id === currentArticle.id);
     if (articleIndex !== -1) {
       knowledgeBaseArticles.splice(articleIndex, 1);
@@ -247,7 +242,6 @@ const ManageKnowledgeBase = () => {
           </Table>
         </div>
 
-        {/* Add Article Dialog */}
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
@@ -313,7 +307,6 @@ const ManageKnowledgeBase = () => {
           </DialogContent>
         </Dialog>
 
-        {/* Edit Article Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
@@ -379,7 +372,6 @@ const ManageKnowledgeBase = () => {
           </DialogContent>
         </Dialog>
 
-        {/* View Article Dialog */}
         <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
           <DialogContent className="sm:max-w-[700px]">
             <DialogHeader>
@@ -408,7 +400,6 @@ const ManageKnowledgeBase = () => {
           </DialogContent>
         </Dialog>
 
-        {/* Delete Article Confirmation Dialog */}
         <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
