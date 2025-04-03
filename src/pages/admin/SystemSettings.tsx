@@ -18,6 +18,8 @@ const SystemSettings = () => {
     emailNotifications: true,
     autoAssignment: true,
     defaultPriority: "Medium" as TicketPriority,
+    forcePasswordChange: false,
+    twoFactorAuth: false,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,7 +163,8 @@ const SystemSettings = () => {
                 </div>
                 <Switch 
                   id="force-password-change" 
-                  checked={false} 
+                  checked={settings.forcePasswordChange}
+                  onCheckedChange={(checked) => handleSwitchChange("forcePasswordChange", checked)}
                 />
               </div>
 
@@ -174,7 +177,8 @@ const SystemSettings = () => {
                 </div>
                 <Switch 
                   id="two-factor" 
-                  checked={false} 
+                  checked={settings.twoFactorAuth}
+                  onCheckedChange={(checked) => handleSwitchChange("twoFactorAuth", checked)}
                 />
               </div>
             </CardContent>
