@@ -8,23 +8,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { TicketPriority } from "@/lib/types";
+import { TicketPriority, SystemSettingsFormData } from "@/lib/types";
 import { Settings, Mail, Bell, Shield, Link as LinkIcon, MessageSquare } from "lucide-react";
 
 const SystemSettings = () => {
   const { toast } = useToast();
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = useState<SystemSettingsFormData>({
     siteName: "Support Ticketing System",
     emailNotifications: true,
     autoAssignment: true,
     defaultPriority: "Medium" as TicketPriority,
     forcePasswordChange: false,
     twoFactorAuth: false,
-    // New integration settings
+    // Integration settings
     crmIntegration: false,
     emailClientIntegration: false,
     projectManagementIntegration: false,
-    // New multi-channel support settings
+    // Multi-channel support settings
     emailSupport: true,
     chatSupport: false,
     socialMediaSupport: false,
@@ -45,6 +45,46 @@ const SystemSettings = () => {
   };
 
   const handleSaveSettings = () => {
+    // In a real application, you would save these settings to a database
+    console.log("Saving settings:", settings);
+    
+    // For integration settings, you might need to initialize connections
+    if (settings.crmIntegration) {
+      console.log("Initializing CRM integration");
+      // Code to initialize CRM connection would go here
+    }
+    
+    if (settings.emailClientIntegration) {
+      console.log("Initializing email client integration");
+      // Code to initialize email client connection would go here
+    }
+    
+    if (settings.projectManagementIntegration) {
+      console.log("Initializing project management integration");
+      // Code to initialize project management tool connection would go here
+    }
+    
+    // For multi-channel support, you would initialize the appropriate services
+    if (settings.emailSupport) {
+      console.log("Email support channel active");
+      // Code to set up email listening service would go here
+    }
+    
+    if (settings.chatSupport) {
+      console.log("Chat support channel active");
+      // Code to initialize chat widget would go here
+    }
+    
+    if (settings.socialMediaSupport) {
+      console.log("Social media support channel active");
+      // Code to initialize social media listening would go here
+    }
+    
+    if (settings.phoneSupport) {
+      console.log("Phone support channel active");
+      // Code to initialize phone system integration would go here
+    }
+    
     toast({
       title: "Settings Saved",
       description: "Your system settings have been updated successfully",
@@ -193,7 +233,7 @@ const SystemSettings = () => {
             </CardContent>
           </Card>
 
-          {/* New Integration Card */}
+          {/* Integration Settings Card */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
@@ -247,7 +287,7 @@ const SystemSettings = () => {
             </CardContent>
           </Card>
 
-          {/* New Multi-Channel Support Card */}
+          {/* Multi-Channel Support Card */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
