@@ -3,8 +3,8 @@ The Helpdesk-in-Sight is a software support ticketing system portal is a central
 
 ## Project info
 
-**URL**: [https://lovable.dev/projects/fa875483-a90d-4065-925e-52070ddbf848](https://helpdesk-in-sight.lovable.app/)
-**URL**: https://lovable.dev/projects/fa875483-a90d-4065-925e-52070ddbf848
+**URL**: https://helpdesk-in-sight.lovable.app/
+//**URL**: https://lovable.dev/projects/fa875483-a90d-4065-925e-52070ddbf848
 
 If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
