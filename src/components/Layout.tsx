@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getCurrentUser, hasRole, logout } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
