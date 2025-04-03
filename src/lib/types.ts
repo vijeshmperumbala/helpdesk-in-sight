@@ -3,7 +3,7 @@
 
 export type UserRole = "user" | "agent" | "admin";
 
-export type TicketStatus = "Open" | "In Progress" | "Resolved";
+export type TicketStatus = "Open" | "In Progress" | "Resolved" | "Pending" | "Hold" | "Completed";
 
 export type TicketPriority = "Low" | "Medium" | "High";
 
@@ -71,4 +71,28 @@ export interface TicketFormData {
 export interface CommentFormData {
   text: string;
   isInternal?: boolean;
+}
+
+export interface UserFormData {
+  name: string;
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
+export interface CategoryFormData {
+  name: string;
+}
+
+export interface KnowledgeBaseFormData {
+  title: string;
+  content: string;
+  category: string;
+}
+
+export interface SystemSettingsFormData {
+  siteName: string;
+  emailNotifications: boolean;
+  autoAssignment: boolean;
+  defaultPriority: TicketPriority;
 }

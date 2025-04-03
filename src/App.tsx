@@ -24,6 +24,10 @@ import AgentTicketView from "./pages/AgentTicketView";
 
 // Admin Pages
 import AdminDashboard from "./pages/AdminDashboard";
+import ManageUsers from "./pages/admin/ManageUsers";
+import ManageCategories from "./pages/admin/ManageCategories";
+import ManageKnowledgeBase from "./pages/admin/ManageKnowledgeBase";
+import SystemSettings from "./pages/admin/SystemSettings";
 
 const queryClient = new QueryClient();
 
@@ -88,6 +92,38 @@ const App = () => (
             element={
               <AuthGuard requiredRole="admin">
                 <AdminDashboard />
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/admin/users" 
+            element={
+              <AuthGuard requiredRole="admin">
+                <ManageUsers />
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/admin/categories" 
+            element={
+              <AuthGuard requiredRole="admin">
+                <ManageCategories />
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/admin/knowledge-base" 
+            element={
+              <AuthGuard requiredRole="admin">
+                <ManageKnowledgeBase />
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/admin/settings" 
+            element={
+              <AuthGuard requiredRole="admin">
+                <SystemSettings />
               </AuthGuard>
             } 
           />
