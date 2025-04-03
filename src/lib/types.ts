@@ -95,4 +95,15 @@ export interface SystemSettingsFormData {
   emailNotifications: boolean;
   autoAssignment: boolean;
   defaultPriority: TicketPriority;
+  forcePasswordChange: boolean;
+  twoFactorAuth: boolean;
+  // Integration settings
+  crmIntegration: boolean;
+  emailClientIntegration: boolean;
+  projectManagementIntegration: boolean;
+  // Multi-channel support settings
+  emailSupport: boolean;
+  chatSupport: boolean;
+  socialMediaSupport: boolean;
+  phoneSupport: boolean;
 }

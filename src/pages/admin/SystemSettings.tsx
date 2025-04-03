@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { TicketPriority } from "@/lib/types";
-import { Settings, Mail, Bell, Shield } from "lucide-react";
+import { Settings, Mail, Bell, Shield, Link as LinkIcon, MessageSquare } from "lucide-react";
 
 const SystemSettings = () => {
   const { toast } = useToast();
@@ -20,6 +20,15 @@ const SystemSettings = () => {
     defaultPriority: "Medium" as TicketPriority,
     forcePasswordChange: false,
     twoFactorAuth: false,
+    // New integration settings
+    crmIntegration: false,
+    emailClientIntegration: false,
+    projectManagementIntegration: false,
+    // New multi-channel support settings
+    emailSupport: true,
+    chatSupport: false,
+    socialMediaSupport: false,
+    phoneSupport: false,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,6 +188,128 @@ const SystemSettings = () => {
                   id="two-factor" 
                   checked={settings.twoFactorAuth}
                   onCheckedChange={(checked) => handleSwitchChange("twoFactorAuth", checked)}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* New Integration Card */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <LinkIcon className="h-5 w-5 text-primary" />
+                <CardTitle>Integration Settings</CardTitle>
+              </div>
+              <CardDescription>Connect with other tools and platforms</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label htmlFor="crm-integration" className="text-base">CRM Integration</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Connect to CRM platforms to access customer history
+                  </p>
+                </div>
+                <Switch 
+                  id="crm-integration" 
+                  checked={settings.crmIntegration}
+                  onCheckedChange={(checked) => handleSwitchChange("crmIntegration", checked)}
+                />
+              </div>
+
+              <div className="flex items-center justify-between mt-4">
+                <div>
+                  <Label htmlFor="email-client-integration" className="text-base">Email Client Integration</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Connect to email clients for seamless communications
+                  </p>
+                </div>
+                <Switch 
+                  id="email-client-integration" 
+                  checked={settings.emailClientIntegration}
+                  onCheckedChange={(checked) => handleSwitchChange("emailClientIntegration", checked)}
+                />
+              </div>
+
+              <div className="flex items-center justify-between mt-4">
+                <div>
+                  <Label htmlFor="project-management-integration" className="text-base">Project Management Integration</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Link tickets to project management workflows
+                  </p>
+                </div>
+                <Switch 
+                  id="project-management-integration" 
+                  checked={settings.projectManagementIntegration}
+                  onCheckedChange={(checked) => handleSwitchChange("projectManagementIntegration", checked)}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* New Multi-Channel Support Card */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-primary" />
+                <CardTitle>Multi-Channel Support</CardTitle>
+              </div>
+              <CardDescription>Configure communication channels</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label htmlFor="email-support" className="text-base">Email Support</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Allow users to create and update tickets via email
+                  </p>
+                </div>
+                <Switch 
+                  id="email-support" 
+                  checked={settings.emailSupport}
+                  onCheckedChange={(checked) => handleSwitchChange("emailSupport", checked)}
+                />
+              </div>
+
+              <div className="flex items-center justify-between mt-4">
+                <div>
+                  <Label htmlFor="chat-support" className="text-base">Live Chat Support</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Enable live chat widget on your website
+                  </p>
+                </div>
+                <Switch 
+                  id="chat-support" 
+                  checked={settings.chatSupport}
+                  onCheckedChange={(checked) => handleSwitchChange("chatSupport", checked)}
+                />
+              </div>
+
+              <div className="flex items-center justify-between mt-4">
+                <div>
+                  <Label htmlFor="social-media-support" className="text-base">Social Media Support</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Import tickets from social media platforms
+                  </p>
+                </div>
+                <Switch 
+                  id="social-media-support" 
+                  checked={settings.socialMediaSupport}
+                  onCheckedChange={(checked) => handleSwitchChange("socialMediaSupport", checked)}
+                />
+              </div>
+
+              <div className="flex items-center justify-between mt-4">
+                <div>
+                  <Label htmlFor="phone-support" className="text-base">Phone Support Integration</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Connect phone system to create tickets from calls
+                  </p>
+                </div>
+                <Switch 
+                  id="phone-support" 
+                  checked={settings.phoneSupport}
+                  onCheckedChange={(checked) => handleSwitchChange("phoneSupport", checked)}
                 />
               </div>
             </CardContent>
