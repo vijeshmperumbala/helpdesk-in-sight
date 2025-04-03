@@ -300,3 +300,11 @@ npm run dev
 - Select the "Codespaces" tab.
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
+
+<!-- need to check Multi-Channel Support
+1) there is no email address Configure the for receive ticket emails.
+2) there is no real-time support via web chat window.(Configure chat widget appearance and behavior) not displaying 
+3) there is no social platforms integration. (Connect to your social media accounts)
+4) there is no module and section for Phone Support Integration when it enable.
+
+thus all features  need detail window and integratable detail settings. -->
