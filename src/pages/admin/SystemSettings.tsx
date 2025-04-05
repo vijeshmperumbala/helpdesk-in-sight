@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -7,12 +8,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { TicketPriority, SystemSettingsFormData } from "@/lib/types";
+import { TicketPriority, SystemSettingsFormData, SocialMediaConfig, EmailSupportConfig as EmailConfig, ChatSupportConfig as ChatConfig, PhoneSupportConfig as PhoneConfig } from "@/lib/types";
 import { Settings, Mail, Bell, Shield, Link as LinkIcon, MessageSquare, Globe, Phone } from "lucide-react";
-import { EmailSupportConfig, type EmailSupportConfig as EmailConfig } from "@/components/integrations/EmailSupportConfig";
-import { ChatSupportConfig, type ChatSupportConfig as ChatConfig } from "@/components/integrations/ChatSupportConfig";
-import { SocialMediaConfig, type SocialMediaConfig as SocialConfig } from "@/components/integrations/SocialMediaConfig";
-import { PhoneSupportConfig, type PhoneSupportConfig as PhoneConfig } from "@/components/integrations/PhoneSupportConfig";
+import { EmailSupportConfig } from "@/components/integrations/EmailSupportConfig";
+import { ChatSupportConfig } from "@/components/integrations/ChatSupportConfig";
+import { SocialMediaConfig as SocialMediaConfigComponent } from "@/components/integrations/SocialMediaConfig";
+import { PhoneSupportConfig } from "@/components/integrations/PhoneSupportConfig";
 
 const SystemSettings = () => {
   const { toast } = useToast();
@@ -39,7 +40,7 @@ const SystemSettings = () => {
 
   const [emailConfig, setEmailConfig] = useState<EmailConfig>();
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
-  const [socialConfig, setSocialConfig] = useState<SocialConfig>();
+  const [socialConfig, setSocialConfig] = useState<SocialMediaConfig>();
   const [phoneConfig, setPhoneConfig] = useState<PhoneConfig>();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -459,7 +460,7 @@ const SystemSettings = () => {
           initialData={chatConfig}
         />
 
-        <SocialMediaConfig
+        <SocialMediaConfigComponent
           open={socialConfigOpen}
           onOpenChange={setSocialConfigOpen}
           onSave={setSocialConfig}
