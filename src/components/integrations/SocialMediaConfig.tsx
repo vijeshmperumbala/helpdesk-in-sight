@@ -16,28 +16,13 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription } fr
 import { useForm } from "react-hook-form";
 import { Twitter, Facebook, Instagram, Globe } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { SocialMediaConfig as SocialConfig, SocialPlatform } from "@/lib/types";
 
 interface SocialMediaConfigProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (data: SocialMediaConfig) => void;
-  initialData?: SocialMediaConfig;
-}
-
-export interface SocialPlatform {
-  enabled: boolean;
-  username: string;
-  apiKey: string;
-  autoCreate: boolean;
-}
-
-export interface SocialMediaConfig {
-  twitter: SocialPlatform;
-  facebook: SocialPlatform;
-  instagram: SocialPlatform;
-  convertPrivateMessages: boolean;
-  convertPublicMentions: boolean;
-  responseTemplate: string;
+  onSave: (data: SocialConfig) => void;
+  initialData?: SocialConfig;
 }
 
 export const SocialMediaConfig: React.FC<SocialMediaConfigProps> = ({
@@ -46,7 +31,7 @@ export const SocialMediaConfig: React.FC<SocialMediaConfigProps> = ({
   onSave,
   initialData
 }) => {
-  const form = useForm<SocialMediaConfig>({
+  const form = useForm<SocialConfig>({
     defaultValues: initialData || {
       twitter: {
         enabled: false,
@@ -72,7 +57,7 @@ export const SocialMediaConfig: React.FC<SocialMediaConfigProps> = ({
     }
   });
 
-  const handleSubmit = (data: SocialMediaConfig) => {
+  const handleSubmit = (data: SocialConfig) => {
     console.log("Social media configuration saved:", data);
     onSave(data);
     onOpenChange(false);
@@ -240,7 +225,7 @@ export const SocialMediaConfig: React.FC<SocialMediaConfigProps> = ({
                       />
                     </FormControl>
                     <FormDescription>
-                      Use {{ticketId}} to insert the ticket ID in your template
+                      Use &#123;&#123;ticketId&#125;&#125; to insert the ticket ID in your template
                     </FormDescription>
                   </FormItem>
                 )}
