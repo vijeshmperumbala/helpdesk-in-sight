@@ -90,6 +90,66 @@ export interface KnowledgeBaseFormData {
   category: string;
 }
 
+export interface EmailSupportConfig {
+  incomingEmailAddress: string;
+  outgoingEmailAddress: string;
+  emailSignature: string;
+  autoResponderEnabled: boolean;
+  autoResponderMessage: string;
+}
+
+export interface ChatSupportConfig {
+  widgetTitle: string;
+  widgetPosition: "bottom-right" | "bottom-left";
+  primaryColor: string;
+  welcomeMessage: string;
+  offlineMessage: string;
+  agentDisplayName: string;
+  operatingHours: {
+    enabled: boolean;
+    startTime: string;
+    endTime: string;
+  };
+}
+
+export interface SocialPlatform {
+  enabled: boolean;
+  username: string;
+  apiKey: string;
+  autoCreate: boolean;
+}
+
+export interface SocialMediaConfig {
+  twitter: SocialPlatform;
+  facebook: SocialPlatform;
+  instagram: SocialPlatform;
+  convertPrivateMessages: boolean;
+  convertPublicMentions: boolean;
+  responseTemplate: string;
+}
+
+export interface PhoneSupportConfig {
+  phoneSystem: "twilio" | "asterisk" | "other";
+  apiKey: string;
+  phoneNumber: string;
+  recordCalls: boolean;
+  voicemail: {
+    enabled: boolean;
+    greeting: string;
+  };
+  callRouting: {
+    enabled: boolean;
+    welcomeMessage: string;
+    options: string[];
+  };
+  operatingHours: {
+    enabled: boolean;
+    startTime: string;
+    endTime: string;
+    timezone: string;
+  };
+}
+
 export interface SystemSettingsFormData {
   siteName: string;
   emailNotifications: boolean;

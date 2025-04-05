@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -9,27 +8,39 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { TicketPriority, SystemSettingsFormData } from "@/lib/types";
-import { Settings, Mail, Bell, Shield, Link as LinkIcon, MessageSquare } from "lucide-react";
+import { Settings, Mail, Bell, Shield, Link as LinkIcon, MessageSquare, Globe, Phone } from "lucide-react";
+import { EmailSupportConfig, type EmailSupportConfig as EmailConfig } from "@/components/integrations/EmailSupportConfig";
+import { ChatSupportConfig, type ChatSupportConfig as ChatConfig } from "@/components/integrations/ChatSupportConfig";
+import { SocialMediaConfig, type SocialMediaConfig as SocialConfig } from "@/components/integrations/SocialMediaConfig";
+import { PhoneSupportConfig, type PhoneSupportConfig as PhoneConfig } from "@/components/integrations/PhoneSupportConfig";
 
 const SystemSettings = () => {
   const { toast } = useToast();
   const [settings, setSettings] = useState<SystemSettingsFormData>({
-    siteName: "Support Ticketing System",
+    siteName: "Helpdesk-in-Sight",
     emailNotifications: true,
     autoAssignment: true,
     defaultPriority: "Medium" as TicketPriority,
     forcePasswordChange: false,
     twoFactorAuth: false,
-    // Integration settings
     crmIntegration: false,
     emailClientIntegration: false,
     projectManagementIntegration: false,
-    // Multi-channel support settings
     emailSupport: true,
     chatSupport: false,
     socialMediaSupport: false,
     phoneSupport: false,
   });
+
+  const [emailConfigOpen, setEmailConfigOpen] = useState(false);
+  const [chatConfigOpen, setChatConfigOpen] = useState(false);
+  const [socialConfigOpen, setSocialConfigOpen] = useState(false);
+  const [phoneConfigOpen, setPhoneConfigOpen] = useState(false);
+
+  const [emailConfig, setEmailConfig] = useState<EmailConfig>();
+  const [chatConfig, setChatConfig] = useState<ChatConfig>();
+  const [socialConfig, setSocialConfig] = useState<SocialConfig>();
+  const [phoneConfig, setPhoneConfig] = useState<PhoneConfig>();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -45,44 +56,74 @@ const SystemSettings = () => {
   };
 
   const handleSaveSettings = () => {
-    // In a real application, you would save these settings to a database
     console.log("Saving settings:", settings);
+    console.log("Email config:", emailConfig);
+    console.log("Chat config:", chatConfig);
+    console.log("Social media config:", socialConfig);
+    console.log("Phone config:", phoneConfig);
     
-    // For integration settings, you might need to initialize connections
     if (settings.crmIntegration) {
       console.log("Initializing CRM integration");
-      // Code to initialize CRM connection would go here
     }
     
     if (settings.emailClientIntegration) {
       console.log("Initializing email client integration");
-      // Code to initialize email client connection would go here
     }
     
     if (settings.projectManagementIntegration) {
       console.log("Initializing project management integration");
-      // Code to initialize project management tool connection would go here
     }
     
-    // For multi-channel support, you would initialize the appropriate services
     if (settings.emailSupport) {
       console.log("Email support channel active");
-      // Code to set up email listening service would go here
+      if (emailConfig) {
+        console.log("Using email configuration:", emailConfig);
+        console.log(`Incoming email address: ${emailConfig.incomingEmailAddress}`);
+        console.log(`Outgoing email address: ${emailConfig.outgoingEmailAddress}`);
+        if (emailConfig.autoResponderEnabled) {
+          console.log("Auto-responder enabled with message:", emailConfig.autoResponderMessage);
+        }
+      }
     }
     
     if (settings.chatSupport) {
       console.log("Chat support channel active");
-      // Code to initialize chat widget would go here
+      if (chatConfig) {
+        console.log("Using chat configuration:", chatConfig);
+        console.log(`Widget title: ${chatConfig.widgetTitle}`);
+        console.log(`Widget position: ${chatConfig.widgetPosition}`);
+        if (chatConfig.operatingHours.enabled) {
+          console.log(`Operating hours: ${chatConfig.operatingHours.startTime} - ${chatConfig.operatingHours.endTime}`);
+        }
+      }
     }
     
     if (settings.socialMediaSupport) {
       console.log("Social media support channel active");
-      // Code to initialize social media listening would go here
+      if (socialConfig) {
+        console.log("Using social media configuration:", socialConfig);
+        if (socialConfig.twitter.enabled) {
+          console.log(`Twitter connected: @${socialConfig.twitter.username}`);
+        }
+        if (socialConfig.facebook.enabled) {
+          console.log(`Facebook connected: ${socialConfig.facebook.username}`);
+        }
+        if (socialConfig.instagram.enabled) {
+          console.log(`Instagram connected: ${socialConfig.instagram.username}`);
+        }
+      }
     }
     
     if (settings.phoneSupport) {
       console.log("Phone support channel active");
-      // Code to initialize phone system integration would go here
+      if (phoneConfig) {
+        console.log("Using phone configuration:", phoneConfig);
+        console.log(`Phone system: ${phoneConfig.phoneSystem}`);
+        console.log(`Phone number: ${phoneConfig.phoneNumber}`);
+        if (phoneConfig.callRouting.enabled) {
+          console.log("Call routing enabled with options:", phoneConfig.callRouting.options);
+        }
+      }
     }
     
     toast({
@@ -233,7 +274,6 @@ const SystemSettings = () => {
             </CardContent>
           </Card>
 
-          {/* Integration Settings Card */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
@@ -287,7 +327,6 @@ const SystemSettings = () => {
             </CardContent>
           </Card>
 
-          {/* Multi-Channel Support Card */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
@@ -304,11 +343,22 @@ const SystemSettings = () => {
                     Allow users to create and update tickets via email
                   </p>
                 </div>
-                <Switch 
-                  id="email-support" 
-                  checked={settings.emailSupport}
-                  onCheckedChange={(checked) => handleSwitchChange("emailSupport", checked)}
-                />
+                <div className="flex items-center gap-2">
+                  <Switch 
+                    id="email-support" 
+                    checked={settings.emailSupport}
+                    onCheckedChange={(checked) => handleSwitchChange("emailSupport", checked)}
+                  />
+                  {settings.emailSupport && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setEmailConfigOpen(true)}
+                    >
+                      Configure
+                    </Button>
+                  )}
+                </div>
               </div>
 
               <div className="flex items-center justify-between mt-4">
@@ -318,11 +368,22 @@ const SystemSettings = () => {
                     Enable live chat widget on your website
                   </p>
                 </div>
-                <Switch 
-                  id="chat-support" 
-                  checked={settings.chatSupport}
-                  onCheckedChange={(checked) => handleSwitchChange("chatSupport", checked)}
-                />
+                <div className="flex items-center gap-2">
+                  <Switch 
+                    id="chat-support" 
+                    checked={settings.chatSupport}
+                    onCheckedChange={(checked) => handleSwitchChange("chatSupport", checked)}
+                  />
+                  {settings.chatSupport && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setChatConfigOpen(true)}
+                    >
+                      Configure
+                    </Button>
+                  )}
+                </div>
               </div>
 
               <div className="flex items-center justify-between mt-4">
@@ -332,11 +393,22 @@ const SystemSettings = () => {
                     Import tickets from social media platforms
                   </p>
                 </div>
-                <Switch 
-                  id="social-media-support" 
-                  checked={settings.socialMediaSupport}
-                  onCheckedChange={(checked) => handleSwitchChange("socialMediaSupport", checked)}
-                />
+                <div className="flex items-center gap-2">
+                  <Switch 
+                    id="social-media-support" 
+                    checked={settings.socialMediaSupport}
+                    onCheckedChange={(checked) => handleSwitchChange("socialMediaSupport", checked)}
+                  />
+                  {settings.socialMediaSupport && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setSocialConfigOpen(true)}
+                    >
+                      Configure
+                    </Button>
+                  )}
+                </div>
               </div>
 
               <div className="flex items-center justify-between mt-4">
@@ -346,11 +418,22 @@ const SystemSettings = () => {
                     Connect phone system to create tickets from calls
                   </p>
                 </div>
-                <Switch 
-                  id="phone-support" 
-                  checked={settings.phoneSupport}
-                  onCheckedChange={(checked) => handleSwitchChange("phoneSupport", checked)}
-                />
+                <div className="flex items-center gap-2">
+                  <Switch 
+                    id="phone-support" 
+                    checked={settings.phoneSupport}
+                    onCheckedChange={(checked) => handleSwitchChange("phoneSupport", checked)}
+                  />
+                  {settings.phoneSupport && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setPhoneConfigOpen(true)}
+                    >
+                      Configure
+                    </Button>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -361,6 +444,34 @@ const SystemSettings = () => {
             Save Settings
           </Button>
         </div>
+
+        <EmailSupportConfig
+          open={emailConfigOpen}
+          onOpenChange={setEmailConfigOpen}
+          onSave={setEmailConfig}
+          initialData={emailConfig}
+        />
+
+        <ChatSupportConfig
+          open={chatConfigOpen}
+          onOpenChange={setChatConfigOpen}
+          onSave={setChatConfig}
+          initialData={chatConfig}
+        />
+
+        <SocialMediaConfig
+          open={socialConfigOpen}
+          onOpenChange={setSocialConfigOpen}
+          onSave={setSocialConfig}
+          initialData={socialConfig}
+        />
+
+        <PhoneSupportConfig
+          open={phoneConfigOpen}
+          onOpenChange={setPhoneConfigOpen}
+          onSave={setPhoneConfig}
+          initialData={phoneConfig}
+        />
       </div>
     </Layout>
   );
