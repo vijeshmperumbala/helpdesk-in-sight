@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -236,7 +235,19 @@ const SystemSettings = () => {
           .single();
           
         if (error) throw error;
-        setSettingsId(data.id);
+        if (data) {
+          setSettingsId(data.id);
+        }
+      }
+      
+      if (!settingsId) {
+        toast({
+          title: "Error",
+          description: "No settings record found. Please try again.",
+          variant: "destructive",
+        });
+        setIsSaving(false);
+        return;
       }
       
       // Update system settings
